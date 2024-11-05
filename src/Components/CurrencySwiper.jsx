@@ -9,7 +9,7 @@ import 'swiper/css';
 import { ApiContext } from '../services/ApiContext';
 import { Box, Typography, Container } from '@mui/material';
 
-const CurrencySwiper = () => {
+const CurrencySwiper = ({isDarkMode}) => {
     const { data, loading, error } = useContext(ApiContext);
     
     if (loading) return <p>Loading...</p>;
@@ -17,13 +17,16 @@ const CurrencySwiper = () => {
     if (!data || data.length === 0) return <p>No hay datos disponibles</p>;
 
     const lastUpdates = data.map((item) => new Date(item.fechaActualizacion).toLocaleString());
-
+    
+        const swiperStyle = {
+            backgroundColor: isDarkMode ? '#312c71' : '#fff', 
+            padding: '20px',
+          };
+    
     return (
         <Container sx={{ padding: 2 }}>
-            <Typography variant="h5" component="h2" sx={{ marginBottom: 2 }}>
-                Cotizaciones de Divisas
-            </Typography>
                 <Swiper
+                    style={swiperStyle}
                     spaceBetween={20}
                     autoplay={{ delay: 1500, disableOnInteraction: false }}
                     modules={[Autoplay]}

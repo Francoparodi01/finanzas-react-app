@@ -1,17 +1,6 @@
 import React, { useContext } from 'react';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import ReactECharts from 'echarts-for-react';
 import { Box } from '@mui/material'; // Import Box from Material-UI
-
 import { ApiContext } from '../services/ApiContext';
 
 const Charts = (props) => {
@@ -26,52 +15,55 @@ const Charts = (props) => {
     
     console.log(data);
 
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        BarElement,
-        Title,
-        Tooltip,
-        Legend,
-    );
-
     const chartData = {
-        labels: labels,
-        datasets: [
+        xAxis: {
+            type: 'category',
+            data: labels,
+        },
+        yAxis: {
+            type: 'value',
+        },
+        series: [
             {
-                label: 'Compra',
+                name: 'Compra',
+                type: 'bar',
                 data: compra,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
+                itemStyle: {
+                    color: 'rgba(255, 99, 132, 0.6)',
+                },
             },
             {
-                label: 'Venta',
+                name: 'Venta',
+                type: 'bar',
                 data: venta,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
+                itemStyle: {
+                    color: 'rgba(54, 162, 235, 0.6)',
+                },
             },
         ],
     };
 
     const options = {
-        indexAxis: 'y',
-        elements: {
-            bar: {
-                borderWidth: 2,
+        title: {
+            text: 'Diferencia en distintas cotizaciones de $USD',
+            left: 'center',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow',
             },
         },
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'right',
-            },
-            title: {
-                display: true,
-                text: 'Diferencia en distintas cotizaciones de $USD',
-            },
+        legend: {
+            data: ['Compra', 'Venta'],
+            top: '10%',
+            left: 'center',
+        },
+        grid: {
+            top: '20%',
+            left: '10%',
+            right: '10%',
+            bottom: '10%',
         },
     };
 
@@ -83,7 +75,7 @@ const Charts = (props) => {
                 padding: 2, 
             }}
         >
-            <Bar data={chartData} options={options} />
+            <ReactECharts option={{ ...options, ...chartData }} />
         </Box>
     );
 }

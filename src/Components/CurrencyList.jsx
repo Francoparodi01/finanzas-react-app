@@ -7,17 +7,17 @@ const CurrencyList = ({isDarkMode}) => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!data || data.length === 0) return <p>No hay datos disponibles</p>;
+    if (!data || data.results.length === 0) return <p>No hay datos disponibles</p>;
 
     return (
         <>
-          {data.map((currency) => (
+          {data.results.map((currency) => (
             <CurrencyCard
-              key={currency.id}
-              title={currency.nombre}
-              venta={currency.venta}
-              compra={currency.compra}
-              lastUpdate={currency.fechaActualizacion}
+              key={currency.idVariable} // Aquí usamos `idVariable` como clave única
+              title={currency.descripcion} // La descripción parece ser el título relevante
+              venta={currency.valor} // Usamos el valor para la venta
+              compra={currency.valor} // Supongo que el valor puede ser usado tanto para compra como venta
+              lastUpdate={currency.fecha} // La fecha de actualización
               isDarkMode={isDarkMode} 
             />
           ))}

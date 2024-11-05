@@ -4,16 +4,16 @@ import { Box } from '@mui/material'; // Import Box from Material-UI
 import { ApiContext } from '../services/ApiContext';
 
 const Charts = (props) => {
-    const { data, loading, error } = useContext(ApiContext);
+    const { dolarData, loading, error } = useContext(ApiContext);
     
     if (loading) return <p>Loading...</p>;  
     if (error) return <p>Error: {error}</p>;
     
-    const labels = data.map((item) => item.casa);
-    const compra = data.map((item) => item.compra);
-    const venta = data.map((item) => item.venta);
+    const labels = dolarData.map((item) => item.casa);
+    const compra = dolarData.map((item) => item.compra);
+    const venta = dolarData.map((item) => item.venta);
     
-    console.log(data);
+    console.log(dolarData);
 
     const chartData = {
         xAxis: {

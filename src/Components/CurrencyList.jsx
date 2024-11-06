@@ -2,26 +2,31 @@ import React, { useContext } from "react";
 import { ApiContext } from "../services/ApiContext";
 import CurrencyCard from "../Components/CurrencyCard";
 
-const CurrencyList = ({isDarkMode}) => {
-    const { data, loading, error } = useContext(ApiContext);
+const CurrencyList = ({ isDarkMode }) => {
+    const { 
+        dolarData, 
+        loadingDolar, 
+        errorDolar, 
+    } = useContext(ApiContext);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-    if (!data || data.results.length === 0) return <p>No hay datos disponibles</p>;
+    if (loadingDolar) return <p>Loading...</p>;
+    if (errorDolar) return <p>Error en los datos del dólar: {errorDolar.message}</p>;
+
+    console.log("dolarData", dolarData);  
 
     return (
         <>
-          {data.results.map((currency) => (
+          {dolarData.map((currency) => (
             <CurrencyCard
-              key={currency.idVariable} // Aquí usamos `idVariable` como clave única
-              title={currency.descripcion} // La descripción parece ser el título relevante
-              venta={currency.valor} // Usamos el valor para la venta
-              compra={currency.valor} // Supongo que el valor puede ser usado tanto para compra como venta
-              lastUpdate={currency.fecha} // La fecha de actualización
+              key={currency.casa} 
+              title={currency.casa} 
+              venta={currency.venta} 
+              compra={currency.compra} 
+              lastUpdate={currency.fechaActualizacion} 
               isDarkMode={isDarkMode} 
             />
           ))}
-        </>
+        </> 
     );
 };
 

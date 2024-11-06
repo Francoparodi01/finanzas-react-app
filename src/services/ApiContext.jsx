@@ -4,45 +4,45 @@ export const ApiContext = createContext();
 
 const ApiProvider = ({ children }) => {
     const [dolarData, setDolarData] = useState([]);
-    const [principalesData, setPrincipalesData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const fetchData = async (url, setter) => {
-        setLoading(true);
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            const result = await response.json();
-            setter(result);
-            setError(null);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const dolarUrl = 'https://dolarapi.com/v1/ambito/dolares';
-    const principalesVariablesUrl = 'https://api.bcra.gob.ar/estadisticas/v2.0/principalesvariables';
+    const[variableData, setVariableData] = useState([]);
 
     useEffect(() => {
-        fetchData(dolarUrl, setDolarData);
-    }, [dolarUrl]);
+        fetch("https://dolarapi.com/v1/ambito/dolares")
+            .then((response) => response.json())
+            .then((data) => {
+                setDolarData(data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }
+    , []);
 
+    console.log(dolarData);
     useEffect(() => {
-        fetchData(principalesVariablesUrl, setPrincipalesData);
-        console.log(principalesData);
-
-    }, [principalesVariablesUrl]);
+        fetch("https://api.bcra.gob.ar/estadisticas/v2.0/principalesvariables")
+            .then((response) => response.json())
+            .then((variableData) => {
+                setVariableData(variableData.results);
+                setLoading(false);
+                console.log(variableData.results); 
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
+    
 
     return (
-        <ApiContext.Provider value={{ dolarData, principalesData, loading, error }}>
+        <ApiContext.Provider value={{ variableData, dolarData, loading, error }}>
             {children}
         </ApiContext.Provider>
     );
-}
+};
 
 export default ApiProvider;

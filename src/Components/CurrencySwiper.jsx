@@ -10,24 +10,37 @@ import { ApiContext } from '../services/ApiContext';
 import { Box, Typography, Container, CircularProgress, Alert } from '@mui/material';
 
 const CurrencySwiper = ({ isDarkMode }) => {
-    const { principalesData, loading, error } = useContext(ApiContext);
-
-    if (loading) {
-        return <CircularProgress sx={{ display: 'block', margin: 'auto', padding: '20px' }} />;
-    }
-
-    if (error) {
-        return <Alert severity="error" sx={{ marginBottom: '20px' }}>Error: {error}</Alert>;
-    }
-
-    if (!Array.isArray(principalesData) || principalesData.length === 0) {
-        return <Typography variant="h6">No hay datos disponibles</Typography>;
-    }
+    const { variableData, loading, error } = useContext(ApiContext);
 
     const swiperStyle = {
         backgroundColor: isDarkMode ? '#312c71' : '#fff',
         padding: '20px',
+        borderRadius: '8px'
     };
+
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    if (error) {
+        return (
+            <Alert severity="error">
+                <Typography>Error al cargar los datos: {error.message}</Typography>
+            </Alert>
+        );
+    }
+
+    if (!variableData || variableData.length === 0) {
+        return (
+            <Typography variant="h6" align="center">
+                No hay datos disponibles.
+            </Typography>
+        );
+    }
 
     return (
         <Container sx={{ padding: 2 }}>
@@ -43,15 +56,16 @@ const CurrencySwiper = ({ isDarkMode }) => {
                     1024: { slidesPerView: 4 },
                 }}
             >
-                {principalesData.map((currency) => {
-                    const lastUpdate = new Date(currency.fecha).toLocaleString();
+                {variableData.map((variable) => {
+                    const lastUpdate = new Date(variable.fecha).toLocaleString();
 
                     return (
-                        <SwiperSlide key={currency.idVariable}>
+                        <SwiperSlide key={variable.idVariable}>
                             <CurrencyCard
-                                title={currency.descripcion}
-                                venta={currency.valor}
+                                title={variable.descripcion}
+                                venta={variable.valor}
                                 lastUpdate={lastUpdate}
+                                isDarkMode={isDarkMode}
                             />
                         </SwiperSlide>
                     );

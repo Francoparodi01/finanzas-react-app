@@ -5,6 +5,9 @@ import CurrencyList from './Components/CurrencyList';
 import Charts from './Components/Charts';
 import  ApiProvider from './services/ApiContext';
 import CurrencySwiper from './Components/CurrencySwiper';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import CurrencyCard from './Components/CurrencyCard';
+import CardDetail from './Components/CardDetail';
 
 
 const App = () => {
@@ -23,12 +26,17 @@ const App = () => {
   return (
     <ApiProvider>
       <ThemeProvider theme={theme}>
+        <Router>
           <Container>
               <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-              <CurrencySwiper/>
-              <CurrencyList/>    
-              <Charts/>
+            <Routes>
+              <Route path="/" element={<CurrencySwiper />} />
+              <Route path="/dolar" element={<CurrencyList/>} />
+              <Route path="/CardDetail/:id" element={<CardDetail />} />
+              <Route path="/charts" element={<Charts />} />
+            </Routes>
           </Container>
+        </Router>
       </ThemeProvider>
     </ApiProvider>
   );

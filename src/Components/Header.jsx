@@ -2,6 +2,8 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Switch, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import { MdNightlight, MdSunny } from "react-icons/md";
+import { Link } from 'react-router-dom';
+
 
 const Root = styled('div')(({ theme }) => ({
     flexGrow: 1,
@@ -33,9 +35,11 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
         <Root>
             <AppBar position="static" sx={{ backgroundColor }}>
                 <Toolbar>
-                    <Title variant="h4">Finanzas App</Title>
-                    <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
-                        <NavButton>Home</NavButton>
+                    <Link to="/" style={{ textDecoration: 'none' }}>
+                        <Title variant="h4">Finanzas App</Title>
+                    </Link>
+                    <Box sx={{ display: { xs: 'none', sm: 'flex'}, alignItems: 'center', marginLeft: '450px' }}>
+                        <NavButton href="/dolar">Cotización dolar</NavButton>
                         <NavButton>About</NavButton>
                         <NavButton>Contact</NavButton>
                     </Box>

@@ -41,7 +41,7 @@ const CurrencySwiper = ({ isDarkMode }) => {
             </Typography>
         );
     }
-
+    
     return (
         <Container sx={{ padding: 2 }}>
             <Swiper
@@ -49,6 +49,7 @@ const CurrencySwiper = ({ isDarkMode }) => {
                 spaceBetween={20}
                 autoplay={{ delay: 1500, disableOnInteraction: false }}
                 modules={[Autoplay]}
+                watchSlidesProgress={true}
                 breakpoints={{
                     320: { slidesPerView: 1 },
                     480: { slidesPerView: 2 },
@@ -56,14 +57,14 @@ const CurrencySwiper = ({ isDarkMode }) => {
                     1024: { slidesPerView: 4 },
                 }}
             >
-                {variableData.map((variable) => {
-                    const lastUpdate = new Date(variable.fecha).toLocaleString();
+                {variableData.map((currency) => {
+                    const lastUpdate = new Date(currency.fecha).toLocaleString();
 
                     return (
-                        <SwiperSlide key={variable.idVariable}>
+                        <SwiperSlide key={currency.idVariable}>
                             <CurrencyCard
-                                title={variable.descripcion}
-                                venta={variable.valor}
+                                title={currency.descripcion}
+                                venta={currency.valor}
                                 lastUpdate={lastUpdate}
                                 isDarkMode={isDarkMode}
                             />

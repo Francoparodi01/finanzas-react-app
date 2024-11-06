@@ -7,22 +7,33 @@ const ApiProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const[variableData, setVariableData] = useState([]);
+    const[inflationData, setInflationData] = useState([]);
+
+
+    const formatDate = (date) => {
+        const newDate = new Date(date);
+        return newDate.toLocaleString();
+    };
 
     useEffect(() => {
         fetch("https://dolarapi.com/v1/ambito/dolares")
             .then((response) => response.json())
             .then((data) => {
-                setDolarData(data);
+                const formattedData = data.map((item) => ({
+                    ...item,
+                    id: `${item.moneda}-${item.casa}`,
+                    date: formatDate(item.fechaActualizacion),
+                }));
+                setDolarData(formattedData);
                 setLoading(false);
             })
             .catch((error) => {
                 setError(error);
                 setLoading(false);
             });
-    }
-    , []);
-
-    console.log(dolarData);
+    }, []);
+    
+    
     useEffect(() => {
         fetch("https://api.bcra.gob.ar/estadisticas/v2.0/principalesvariables")
             .then((response) => response.json())
@@ -36,10 +47,23 @@ const ApiProvider = ({ children }) => {
                 setLoading(false);
             });
     }, []);
-    
+
+    useEffect(() => {
+        fetch("https://api.argentinadatos.com/v1/finanzas/indices/inflacion")
+            .then((response) => response.json())
+            .then((inflationData) => {
+                setInflationData(inflationData);
+                setLoading(false);
+                console.log(inflationData);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
     return (
-        <ApiContext.Provider value={{ variableData, dolarData, loading, error }}>
+        <ApiContext.Provider value={{ variableData, dolarData, loading, error, inflationData }}>
             {children}
         </ApiContext.Provider>
     );

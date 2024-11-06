@@ -14,11 +14,15 @@ const CurrencyList = ({ isDarkMode }) => {
 
     console.log("dolarData", dolarData);  
 
+    const backgroundColor = isDarkMode ? '#d2d2a5' : '#459ab6'; 
+    const textColor = isDarkMode ? '#000000' : '#ffffff'; 
+
     return (
         <>
           {dolarData.map((currency) => (
             <CurrencyCard
               key={currency.casa} 
+              id={currency.id} 
               title={currency.casa} 
               venta={currency.venta} 
               compra={currency.compra} 

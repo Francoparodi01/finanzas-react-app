@@ -22,7 +22,11 @@ const CurrencyCard = ({ title, venta, compra, lastUpdate, isDarkMode, id }) => {
         <CardContent>
           <Typography variant="h5" style={{ color: textColor }}>{title}</Typography>
           <Typography color="textSecondary" style={{ color: textColor }}>Venta: {formatCurrency(venta)}</Typography>
-          <Typography color="textSecondary" style={{ color: textColor }}>Compra: {formatCurrency(compra)}</Typography>
+          {compra && (
+            <Typography color="textSecondary" style={{ color: textColor }}>
+              Compra: {formatCurrency(compra)}
+            </Typography>
+          )}
           <Typography variant="caption" color="textSecondary" style={{ color: textColor }}>{lastUpdate}</Typography>
         </CardContent>
       </Card>

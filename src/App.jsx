@@ -31,7 +31,16 @@ const App = () => {
           <Container>
               <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
             <Routes>
-              <Route path="/" element={<CurrencySwiper />} />
+            <Route
+                path="/"
+                element={
+                  <>
+                    <CurrencySwiper />
+                    <CurrencyList />
+                    <InflationChart />
+                  </>
+                }
+              />
               <Route path="/inflacion" element = {<InflationChart/>} />
               <Route path="/dolar" element={<CurrencyList/>} />
               <Route path="/CardDetail/:id" element={<CardDetail />} />

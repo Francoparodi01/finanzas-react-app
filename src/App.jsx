@@ -8,6 +8,7 @@ import CurrencySwiper from './Components/CurrencySwiper';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import CurrencyCard from './Components/CurrencyCard';
 import CardDetail from './Components/CardDetail';
+import InflationChart from './Components/InflationChart';
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
               <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
             <Routes>
               <Route path="/" element={<CurrencySwiper />} />
+              <Route path="/inflacion" element = {<InflationChart/>} />
               <Route path="/dolar" element={<CurrencyList/>} />
               <Route path="/CardDetail/:id" element={<CardDetail />} />
               <Route path="/charts" element={<Charts />} />

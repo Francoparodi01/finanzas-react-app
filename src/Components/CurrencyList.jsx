@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ApiContext } from "../services/ApiContext";
 import CurrencyCard from "../Components/CurrencyCard";
+import Charts from "./Charts";
 
 const CurrencyList = ({ isDarkMode }) => {
     const { 
@@ -14,8 +15,6 @@ const CurrencyList = ({ isDarkMode }) => {
 
     console.log("dolarData", dolarData);  
 
-    const backgroundColor = isDarkMode ? '#d2d2a5' : '#459ab6'; 
-    const textColor = isDarkMode ? '#000000' : '#ffffff'; 
 
     return (
         <>
@@ -29,7 +28,8 @@ const CurrencyList = ({ isDarkMode }) => {
               lastUpdate={currency.fechaActualizacion} 
               isDarkMode={isDarkMode} 
             />
-          ))}
+        ))}
+        <Charts/>
         </> 
     );
 };

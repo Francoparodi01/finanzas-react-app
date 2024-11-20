@@ -8,6 +8,8 @@ const ApiProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const[variableData, setVariableData] = useState([]);
     const[inflationData, setInflationData] = useState([]);
+    const[riskData, setRiskData] = useState([]);
+    
 
 
     const formatDate = (date) => {
@@ -47,6 +49,20 @@ const ApiProvider = ({ children }) => {
                 setLoading(false);
             });
     }, []);
+
+    useEffect(() => {
+        fetch("https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais")
+            .then((response) => response.json())
+            .then((riskData) => {
+                setRiskData(riskData);
+                setLoading(false);
+                console.log(riskData);
+            })
+            .catch((error) => {
+                setError(error);
+                setLoading(false);
+            });
+    } , []);
 
     useEffect(() => {
         fetch("https://api.argentinadatos.com/v1/finanzas/indices/inflacion")

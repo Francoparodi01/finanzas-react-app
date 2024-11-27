@@ -38,6 +38,7 @@ const App = () => {
                     <CurrencySwiper />
                     <CurrencyList />
                     <InflationChart />
+                    <p> Para ver algiito </p>
                   </>
                 }
               />

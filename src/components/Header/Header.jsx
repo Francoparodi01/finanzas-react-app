@@ -10,21 +10,26 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
-    flexGrow: 1,
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    color: theme.palette.common.white,
-    [theme.breakpoints.down('sm')]: {
-        fontSize: '1.5rem',
+    color: 'white',
+    marginRight: 'auto',
+    cursor: 'pointer',
+    '&:hover': {
+        color: 'white',
     },
 }));
 
 const NavButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.common.white,
-    marginLeft: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-        fontSize: '0.9rem',
-        marginLeft: theme.spacing(1),
+    color: 'white',
+    '&:hover': {
+        color: 'white',
+    },
+    marginLeft: '16px',
+    textTransform: 'none',
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    '&:hover': { 
+        color: 'white',
     },
 }));
 
